@@ -1,0 +1,41 @@
+name: Deploy Vertex Hub to GitHub Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "public/files/**"
+      - "public/vertex-logo.png"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Prepare static site
+        run: |
+          mkdir -p _site/files
+          cp docs/index.html _site/index.html
+          cp public/vertex-logo.png _site/vertex-logo.png
+          cp public/files/*.rbxl public/files/*.rbxm _site/files/
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
