@@ -8,9 +8,9 @@ export const Route = createFileRoute("/")({ component: Home });
 type Filter = "all" | PlaceExt;
 
 const FILTERS: { id: Filter; label: string }[] = [
-  { id: "all", label: "Tümü" },
-  { id: "rbxl", label: "Yer .rbxl" },
-  { id: "rbxm", label: "Model .rbxm" },
+  { id: "all", label: "All" },
+  { id: "rbxl", label: "Places .rbxl" },
+  { id: "rbxm", label: "Models .rbxm" },
 ];
 
 function Home() {
@@ -53,23 +53,23 @@ function Home() {
     <div className="min-h-screen w-full bg-background font-sans text-foreground selection:bg-primary/30">
       <div className="vertex-grid" aria-hidden="true" />
       <nav className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between border-b border-border/50 bg-background/80 px-6 py-4 backdrop-blur-md">
-        <a href="#dosyalar" className="flex items-center gap-3">
+        <a href="#files" className="flex items-center gap-3">
           <img src="/vertex-logo.png" alt="" className="size-8 object-contain mix-blend-screen" />
           <span className="text-xl font-bold tracking-tight">Vertex Hub</span>
         </a>
         <div className="hidden items-center gap-8 md:flex">
-          <a href="#dosyalar" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
-            Dosyalar
+          <a href="#files" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
+            Files
           </a>
-          <a href="#acilis" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
-            Nasıl açılır
+          <a href="#how-to-open" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
+            How to open
           </a>
         </div>
         <a
-          href="#dosyalar"
+          href="#files"
           className="rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-on-primary"
         >
-          İndir
+          Download
         </a>
       </nav>
 
@@ -84,41 +84,41 @@ function Home() {
             Vertex Hub
           </h1>
           <p className="mb-4 max-w-2xl text-lg text-muted sm:text-xl">
-            Uygulama değil. Roblox yer ve model dosyaları. İndir, Studio'da aç.
+            Roblox place and model files. Download them and open them in Studio.
           </p>
           <p className="mb-10 font-mono text-sm text-foreground">
             {PLACES.length} dosya · {formatBytes(ARCHIVE_BYTES)}
           </p>
           <a
-            href="#dosyalar"
+            href="#files"
             className="inline-flex h-12 items-center rounded-lg bg-primary px-8 text-lg font-semibold text-on-primary"
           >
-            Dosyalara git
+            Browse files
           </a>
         </div>
 
-        <section id="dosyalar" className="mb-20 w-full max-w-5xl scroll-mt-24">
+        <section id="files" className="mb-20 w-full max-w-5xl scroll-mt-24">
           <div className="mb-8 text-center">
-            <h2 className="mb-2 text-3xl font-bold tracking-tight sm:text-4xl">Dosyalar</h2>
-            <p className="text-muted">Verdiğin .rbxl ve .rbxm dosyaları.</p>
+            <h2 className="mb-2 text-3xl font-bold tracking-tight sm:text-4xl">Files</h2>
+            <p className="text-muted">Available Roblox place and model files.</p>
           </div>
 
           <div className="mx-auto mb-4 flex max-w-xl items-center gap-2 rounded-xl border border-border/50 bg-card/50 px-4">
             <Search className="size-4 shrink-0 text-muted" aria-hidden="true" />
             <label className="sr-only" htmlFor="file-search">
-              Dosya ara
+              Search files
             </label>
             <input
               id="file-search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Ada göre ara"
+              placeholder="Search by name"
               suppressHydrationWarning
               className="h-12 w-full bg-transparent text-foreground outline-none placeholder:text-muted"
             />
           </div>
 
-          <div className="mb-6 flex flex-wrap justify-center gap-2" role="group" aria-label="Dosya türü">
+          <div className="mb-6 flex flex-wrap justify-center gap-2" role="group" aria-label="File type">
             {FILTERS.map((item) => {
               const active = filter === item.id;
               const count =
@@ -146,7 +146,7 @@ function Home() {
 
           {files.length === 0 ? (
             <p className="rounded-xl border border-border/50 bg-card/50 px-4 py-10 text-center text-muted">
-              Bu aramaya uyan dosya yok.
+              No files match your search.
             </p>
           ) : (
             <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -176,7 +176,7 @@ function Home() {
                         className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-on-primary"
                       >
                         <Download className="size-4" aria-hidden="true" />
-                        İndir
+                        Download
                       </a>
                       <button
                         type="button"
@@ -184,7 +184,7 @@ function Home() {
                         className="inline-flex h-11 items-center gap-2 rounded-lg border border-border bg-transparent px-4 text-sm font-semibold text-foreground hover:bg-card"
                       >
                         <Copy className="size-4" aria-hidden="true" />
-                        {copiedId === file.id ? "Kopyalandı" : "Bağlantı"}
+                        {copiedId === file.id ? "Copied!" : "Copy link"}
                       </button>
                     </div>
                   </li>
@@ -194,24 +194,24 @@ function Home() {
           )}
         </section>
 
-        <section id="acilis" className="w-full max-w-5xl scroll-mt-24">
+        <section id="how-to-open" className="w-full max-w-5xl scroll-mt-24">
           <div className="mb-8 text-center">
-            <h2 className="mb-2 text-3xl font-bold tracking-tight sm:text-4xl">Nasıl açılır</h2>
-            <p className="text-muted">Studio'da iki farklı dosya türü.</p>
+            <h2 className="mb-2 text-3xl font-bold tracking-tight sm:text-4xl">How to open</h2>
+            <p className="text-muted">Two Roblox file types.</p>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <article className="rounded-xl border border-border/50 bg-card/50 p-6">
               <p className="font-mono text-xs text-accent">.RBXL</p>
-              <h3 className="mt-3 text-lg font-semibold">Yer dosyası</h3>
+              <h3 className="mt-3 text-lg font-semibold">Place file</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
-                Roblox Studio → Dosya → Dosyadan aç. Harita ve ACS yerleri bu şekilde açılır.
+                Open Roblox Studio and choose File → Open from File. Use this for place files.
               </p>
             </article>
             <article className="rounded-xl border border-border/50 bg-card/50 p-6">
               <p className="font-mono text-xs text-accent">.RBXM</p>
               <h3 className="mt-3 text-lg font-semibold">Model</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
-                Bir yer açıkken dosyayı Explorer paneline sürükle. nuycs ACS v2 bir modeldir.
+                With a place open, drag the model file into the Explorer panel to insert it.
               </p>
             </article>
           </div>
@@ -219,7 +219,7 @@ function Home() {
       </main>
 
       <footer className="relative z-10 border-t border-border/50 py-12 text-center text-sm text-muted">
-        <p>© {new Date().getFullYear()} Vertex Hub. Yer dosyaları.</p>
+        <p>© {new Date().getFullYear()} Vertex Hub. Roblox place and model files.</p>
       </footer>
     </div>
   );
