@@ -17,7 +17,7 @@ export const PLACES: PlaceFile[] = GENERATED_PLACES.map((file) => {
   const isPlace = file.ext === "rbxl";
   return {
     ...file,
-    kind: isPlace ? "Place" : "Model",
+    kind: isPlace ? (file.name.toLowerCase().includes("map") ? "Map" : "Place") : "Model",
     note: isPlace
       ? "Open in Roblox Studio using File → Open from File."
       : "With a place open, drag this model into the Explorer panel to insert it.",

@@ -87,7 +87,7 @@ function Home() {
             Roblox place and model files. Download them and open them in Studio.
           </p>
           <p className="mb-10 font-mono text-sm text-foreground">
-            {PLACES.length} dosya · {formatBytes(ARCHIVE_BYTES)}
+            {PLACES.length} {PLACES.length === 1 ? "file" : "files"} · {formatBytes(ARCHIVE_BYTES)}
           </p>
           <a
             href="#files"
